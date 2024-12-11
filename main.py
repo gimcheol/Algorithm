@@ -1,16 +1,37 @@
-# This is a sample Python script.
+import sys
+from collections import deque
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+input = sys.stdin.readline
 
+N, M = map(int, input().split())
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+adj = [[] for _ in range(N)]
 
+for _ in range(M):
+    a, b = list(map(int, input().split())) # 연결 요소 개수
+    adj[a - 1].append(b - 1)
+    adj[b - 1].append(a - 1)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+visit = [False] * N
+cnt = 0 # 연결 요소의 개수
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# BFS
+for i in range(N):
+    if visit[i]:
+        continue
+
+    # 새로운 연결 요소 발견시 개수 증가
+    cnt +=1
+
+    queue = deque([i])
+    visit[i] = True
+
+    while queue:
+        a = queue.popleft()
+
+        for v in adj[a]:
+            if not visit[v]:
+                queue.append(v)
+                visit[v] = True
+
+print(cnt)

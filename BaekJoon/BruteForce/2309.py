@@ -1,14 +1,14 @@
 from itertools import combinations
 
-answer = []
+N = []
 
-for i in range(9):
-    height = int(input())
-    answer.append(height)
+for _ in range(9):
+    N.append(int(input()))
 
-for a in combinations(answer, 7):
-    if sum(a) == 100:
-        a = list(a)
-        a.sort()
-        print(" ".join(a))
+
+for i in combinations(N, 7):
+    if sum(i) == 100:
+        i = list(i)
+        i.sort()
+        print("\n".join(map(str, i)))
         break

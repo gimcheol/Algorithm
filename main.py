@@ -1,37 +1,15 @@
-import sys
-from collections import deque
+# 자연수 N과 M이 주어졌을 때, 아래 조건을 만족하는 길이가 M인 수열을 모두 구하시오
+# 1~N까지 자연수 중에서 중복없이 M개를 고른 수열 (조합)
+# 고른 수열은 오름차순이어야함.
 
-input = sys.stdin.readline
+from itertools import combinations
 
 N, M = map(int, input().split())
 
-adj = [[] for _ in range(N)]
+list = []
 
-for _ in range(M):
-    a, b = list(map(int, input().split())) # 연결 요소 개수
-    adj[a - 1].append(b - 1)
-    adj[b - 1].append(a - 1)
+for i in combinations(range(1, N+1), M):
+    list.append(i)
 
-visit = [False] * N
-cnt = 0 # 연결 요소의 개수
-
-# BFS
-for i in range(N):
-    if visit[i]:
-        continue
-
-    # 새로운 연결 요소 발견시 개수 증가
-    cnt +=1
-
-    queue = deque([i])
-    visit[i] = True
-
-    while queue:
-        a = queue.popleft()
-
-        for v in adj[a]:
-            if not visit[v]:
-                queue.append(v)
-                visit[v] = True
-
-print(cnt)
+for i in list:
+    print(" ".join(map(str, i)))
